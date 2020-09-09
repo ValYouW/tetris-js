@@ -38,15 +38,24 @@ class Game {
 
 	onKeyDown(e) {
 		if (!this.mainShape) { return; }
+		var dx = 0;
+		var dy = 0;
 		switch (e.key) {
 			case 'ArrowLeft':
-				this.mainShape.x -= 1;
+				dx = -1;
 				break;
 			case 'ArrowRight':
-				this.mainShape.x += 1;
+				dx = 1;
+				break;
+			case 'ArrowDown':
+				dy = 1;
 				break;
 			case 'Space':
 				break;
+		}
+
+		if (this.board.canMove(this.mainShape, dx, dy)) {
+			this.mainShape.move(dx, dy);
 		}
 	}
 
@@ -67,13 +76,20 @@ class Game {
 			var y = 0;
 			this.mainShape = Shape.create('Square', x, y);
 		} else {
-			this.mainShape.y += 1;
+			if (this.board.canMove(this.mainShape, 0, 1)) {
+				this.mainShape.move(0, 1);
+			} else {
+				// add shape to board and check fill lines
+				this.mainShape = null;
+			}
 		}
 	}
 
 	draw() {
 		this.graphics.clear();
-		this.mainShape.draw(this.graphics);
+		if (this.mainShape !== null) {
+			this.mainShape.draw(this.graphics);
+		}
 	}
 }
 

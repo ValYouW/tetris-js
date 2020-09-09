@@ -4,6 +4,21 @@ class Shape {
 		this.y = y;
 		this.w = w;
 		this.h = h;
+
+		this.blocks = [];
+	}
+
+	move(dx, dy) {
+		this.x += dx;
+		this.y += dy;
+		this.blocks.forEach(p => {
+			p.x += dx;
+			p.y += dy;
+		});
+	}
+
+	draw(graphics) {
+		this.blocks.forEach(p => graphics.drawBlock(p.x, p.y));
 	}
 }
 
@@ -21,13 +36,10 @@ export default Shape;
 class Square extends Shape {
 	constructor(x, y) {
 		super(x, y, 2, 2);
-	}
-
-	draw(graphics) {
-		graphics.drawBlock(this.x, this.y);
-		graphics.drawBlock(this.x + 1, this.y);
-		graphics.drawBlock(this.x + 1, this.y + 1);
-		graphics.drawBlock(this.x, this.y + 1);
+		this.blocks.push({ x, y });
+		this.blocks.push({ x: x + 1, y });
+		this.blocks.push({ x: x + 1, y: y + 1 });
+		this.blocks.push({ x, y: y + 1 });
 	}
 }
 
