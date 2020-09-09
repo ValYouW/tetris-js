@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<style>
+			head, body {
+				margin: 0;
+				height: 100%;
+				box-sizing: border-box;
+			}
+
+			.content {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.left,
+			.right {
+				flex: 1;
+			}
+
+			.board-wrap {
+				display: flex;
+				align-items: center;
+			}
+
+			#board {
+				width: 400px;
+				height: 600px;
+				border: 1px solid;
+    			box-sizing: border-box;
+			}
+
+		</style>
+
+		<script type="module" src="index.js"></script>
+	</head>
+	<body>
+		<div class="content">
+			<div class="left">
+				<button id="btnStart">Start</button>
+			</div>
+			<div class="board-wrap">
+				<canvas id="board"></canvas>
+			</div>
+			<div class="right">BBB</div>
+		</div>
+	</body>
+</html>
