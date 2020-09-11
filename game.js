@@ -9,6 +9,7 @@ const BLOCK_SIZE = 20;
 class Game {
 	constructor(canvas) {
 		this.canvas = canvas;
+		this.gameOver = false;
 
 		this.mainShape = null;
 		this.board = null;
@@ -83,18 +84,14 @@ class Game {
 	}
 
 	update() {
-		if (Date.now() - this.lastUpdate > INTERVAL) {
-			var gameOver = this.gameStep();
-			if (gameOver) {
-				this.stop();
-				alert('Game Over !!');
-				return;
-			}
+		if (!this.gameOver && Date.now() - this.lastUpdate > INTERVAL) {
+			this.gameOver = this.gameStep();
 			this.lastUpdate = Date.now();
+		} else if (this.gameOver) {
+			this.board.dance();
 		}
 
 		this.draw();
-
 		this.timer = window.requestAnimationFrame(this.update.bind(this));
 	}
 
