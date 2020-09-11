@@ -13,7 +13,7 @@ class Board {
 		if (dy < 0) { return; }
 
 		// Test out-of-bounds
-		if (dx > 0 && (shape.bbox.x + shape.bbox.width - 1) + dx >= this.cols) {
+		if (dx > 0 && shape.bbox.ending.x + dx >= this.cols) {
 			return false;
 		}
 
@@ -21,7 +21,7 @@ class Board {
 			return false;
 		}
 
-		if (dy > 0 && (shape.bbox.y + shape.bbox.height - 1) + dy >= this.rows) {
+		if (dy > 0 && shape.bbox.ending.y + dy >= this.rows) {
 			return false;
 		}
 

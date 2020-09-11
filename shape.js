@@ -39,16 +39,16 @@ class Shape {
 				dy = inBounds.y - this.bbox.y;
 			}
 
-			if (this.bbox.y > (inBounds.height - 1)) {
-				dy = (inBounds.height - 1) - this.bbox.y;
+			if (this.bbox.ending.y > (inBounds.height - 1)) {
+				dy = (inBounds.height - 1) - this.bbox.ending.y;
 			}
 
 			if (this.bbox.x < inBounds.x) {
 				dx = inBounds.x - this.bbox.x;
 			}
 
-			if (this.bbox.x > (inBounds.width - 1)) {
-				dx = (inBounds.width - 1) - this.bbox.x;
+			if (this.bbox.ending.x > (inBounds.width - 1)) {
+				dx = (inBounds.width - 1) - this.bbox.ending.x;
 			}
 
 			this.move(dx, dy);

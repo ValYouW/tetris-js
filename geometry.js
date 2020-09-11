@@ -35,6 +35,7 @@ class Rect {
 		this.origin = origin;
 		this.width = w;
 		this.height = h;
+		this.ending = new Point(this.origin.x + this.width - 1, this.origin.y + this.height - 1);
 	}
 
 	get x() {
@@ -47,6 +48,7 @@ class Rect {
 
 	move(dx, dy = 0) {
 		this.origin.move(dx, dy);
+		this.ending.move(dx, dy);
 	}
 
 	rotate(origin) {
@@ -54,6 +56,7 @@ class Rect {
 		var w = this.width;
 		this.width = this.height;
 		this.height = w;
+		this.ending = new Point(this.origin.x + this.width - 1, this.origin.y + this.height - 1);
 	}
 }
 
