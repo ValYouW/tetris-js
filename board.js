@@ -1,5 +1,5 @@
 import { Point, Rect } from './geometry.js';
-
+const COLORS = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
 class Board {
 	constructor(rows, cols, blockSize) {
 		this.rows = rows;
@@ -7,7 +7,6 @@ class Board {
 		this.bbox = new Rect(new Point(), this.cols, this.rows);
 		this.blockSize = blockSize;
 		this.blocksPile = new Array(rows).fill(0).map(x => new Array(cols).fill(0));
-		this.colors = [];
 	}
 
 	canMove(shape, dx, dy) {
@@ -49,7 +48,6 @@ class Board {
 	}
 
 	addToPile(shape) {
-		this.colors = [...(new Set(this.colors).add(shape.color))];
 		shape.blocks.forEach(p => {
 			this.blocksPile[p.y][p.x] = shape.color;
 		});
@@ -93,7 +91,7 @@ class Board {
 		for (var y = this.rows - 1; y >= 0; --y) {
 			for (var x = 0; x < this.cols; ++x) {
 				if (this.blocksPile[y][x] !== 0) {
-					this.blocksPile[y][x] = this.colors[Math.floor(Math.random() * this.colors.length)];
+					this.blocksPile[y][x] = COLORS[Math.floor(Math.random() * COLORS.length)];
 				}
 			}
 		}

@@ -84,11 +84,14 @@ class Game {
 	}
 
 	update() {
-		if (!this.gameOver && Date.now() - this.lastUpdate > INTERVAL) {
-			this.gameOver = this.gameStep();
+		if (Date.now() - this.lastUpdate > INTERVAL) {
+			if (this.gameOver) {
+				this.board.dance();
+			} else {
+				this.gameOver = this.gameStep();
+			}
+
 			this.lastUpdate = Date.now();
-		} else if (this.gameOver) {
-			this.board.dance();
 		}
 
 		this.draw();
