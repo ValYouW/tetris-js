@@ -1,8 +1,9 @@
 import Graphics from './graphics.js';
 import Board from './board.js';
 import Shape from './shape.js';
+import { Point } from './geometry.js';
 
-const INTERVAL = 250;
+const INTERVAL = 200;
 const BLOCK_SIZE = 20;
 
 class Game {
@@ -19,6 +20,7 @@ class Game {
 	}
 
 	start() {
+		this.stop();
 		document.addEventListener('keydown', this.onKeyDown);
 
 		var rows = this.canvas.height / BLOCK_SIZE;
@@ -33,6 +35,8 @@ class Game {
 
 	stop() {
 		window.cancelAnimationFrame(this.timer);
+		this.lastUpdate = 0;
+		this.mainShape = null;
 		document.removeEventListener('keydown', this.onKeyDown);
 	}
 
@@ -61,7 +65,12 @@ class Game {
 
 	update() {
 		if (Date.now() - this.lastUpdate > INTERVAL) {
-			this.gameStep();
+			var gameOver = this.gameStep();
+			if (gameOver) {
+				this.stop();
+				alert('Game Over !!');
+				return;
+			}
 			this.lastUpdate = Date.now();
 		}
 
@@ -74,12 +83,15 @@ class Game {
 		if (!this.mainShape) {
 			var x = Math.round(this.board.cols / 2);
 			var y = 0;
-			this.mainShape = Shape.create('Square', x, y);
+			this.mainShape = Shape.createRandom(new Point(x, y));
 		} else {
 			if (this.board.canMove(this.mainShape, 0, 1)) {
 				this.mainShape.move(0, 1);
+			} else if (this.mainShape.bbox.y === 0) {
+				return true;
 			} else {
 				// add shape to board and check fill lines
+				this.board.addToPile(this.mainShape);
 				this.mainShape = null;
 			}
 		}
@@ -90,6 +102,8 @@ class Game {
 		if (this.mainShape !== null) {
 			this.mainShape.draw(this.graphics);
 		}
+
+		this.board.draw(this.graphics);
 	}
 }
 
