@@ -28,7 +28,7 @@ class Board {
 		// Test shape collision
 		for (var i = 0; i < shape.blocks.length; ++i) {
 			var pt = shape.blocks[i];
-			if (this.blocksPile[pt.y + dy][pt.x + dx] === 1) {
+			if (this.blocksPile[pt.y + dy][pt.x + dx] !== 0) {
 				return false;
 			}
 		}
@@ -39,7 +39,7 @@ class Board {
 	isVacant(blocks) {
 		for (var i = 0; i < blocks.length; ++i) {
 			var pt = blocks[i];
-			if (this.blocksPile[pt.y][pt.x] === 1) {
+			if (this.blocksPile[pt.y][pt.x] !== 0) {
 				return false;
 			}
 		}
@@ -49,14 +49,14 @@ class Board {
 
 	addToPile(shape) {
 		shape.blocks.forEach(p => {
-			this.blocksPile[p.y][p.x] = 1;
+			this.blocksPile[p.y][p.x] = shape.color;
 		});
 
 		// Remove completed lines
 		for (var y = this.rows - 1; y >= 0; --y) {
 			var sum = 0;
 			for (var x = 0; x < this.cols; ++x) {
-				sum += this.blocksPile[y][x];
+				sum += (this.blocksPile[y][x] === 0 ? 0 : 1);
 			}
 
 			// Full line
@@ -77,8 +77,8 @@ class Board {
 		for (var y = this.rows - 1; y >= 0; --y) {
 			var found = false;
 			for (var x = 0; x < this.cols; ++x) {
-				if (this.blocksPile[y][x] === 1) {
-					graphics.drawBlock(x, y);
+				if (this.blocksPile[y][x] !== 0) {
+					graphics.drawBlock(x, y, this.blocksPile[y][x]);
 					found = true;
 				}
 			}

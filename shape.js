@@ -83,24 +83,6 @@ class Shape {
 	}
 }
 
-// Shape.createRandom = function(origin) {
-// 	var type = TYPES[Math.floor(Math.random() * TYPES.length)]
-// 	switch (type) {
-// 		case 'Square':
-// 			return new Square(origin);
-// 		case 'Line':
-// 			return new Line(origin);
-// 		case 'Plus':
-// 			return new Plus(origin);
-// 		case 'L':
-// 			return new L(origin);
-// 		case 'Z':
-// 			return new Z(origin);
-// 		default:
-// 			throw new Error('Unknown shape type' + type);
-// 	}
-// }
-
 export default Shape;
 
 class Square extends Shape {
@@ -111,7 +93,7 @@ class Square extends Shape {
 		this.blocks.push(origin.clone().move(1, 1));
 		this.blocks.push(origin.clone().move(0, 1));
 
-		// this.color = '#cc0000';
+		this.color = '#cc0000';
 	}
 
 	rotate() { }
@@ -125,7 +107,7 @@ class Line extends Shape {
 		this.blocks.push(origin.clone().move(2));
 		this.blocks.push(origin.clone().move(3));
 
-		// this.color = '#009900';
+		this.color = '#009900';
 	}
 }
 
@@ -137,7 +119,7 @@ class L extends Shape {
 		this.blocks.push(origin.clone().move(2));
 		this.blocks.push(origin.clone().move(2, 1));
 
-		// this.color = '#0000cc';
+		this.color = '#0000cc';
 	}
 }
 
@@ -149,7 +131,7 @@ class Z extends Shape {
 		this.blocks.push(origin.clone().move(1, 1));
 		this.blocks.push(origin.clone().move(2, 1));
 
-		// this.color = '#999900';
+		this.color = '#999900';
 	}
 }
 
@@ -161,6 +143,6 @@ class Plus extends Shape {
 		this.blocks.push(origin.clone().move(2));
 		this.blocks.push(origin.clone().move(1, 1));
 
-		// this.color = '#990099';
+		this.color = '#990099';
 	}
 }
