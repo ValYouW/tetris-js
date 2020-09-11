@@ -45,28 +45,40 @@ class Game {
 		var dx = 0;
 		var dy = 0;
 		var rotate = false;
-		switch (e.key) {
+		switch (e.code) {
 			case 'ArrowLeft':
-				dx = -1;
+				this.moveShape(-1);
 				break;
 			case 'ArrowRight':
-				dx = 1;
+				this.moveShape(1);
 				break;
 			case 'ArrowDown':
-				dy = 1;
+				this.moveShape(0, 1);
 				break;
 			case 'ArrowUp':
-				rotate = true;
+				this.rotateShape();
+				break;
+			case 'Space':
+				this.dropShape();
 				break;
 		}
+	}
 
+	moveShape(dx, dy = 0) {
 		if (this.board.canMove(this.mainShape, dx, dy)) {
 			this.mainShape.move(dx, dy);
+			return true;
 		}
 
-		if (rotate) {
-			this.mainShape.rotate(this.board.bbox);
-		}
+		return false;
+	}
+
+	rotateShape() {
+		this.mainShape.rotate(this.board.bbox);
+	}
+
+	dropShape() {
+		while (this.moveShape(0, 1)) { }
 	}
 
 	update() {
