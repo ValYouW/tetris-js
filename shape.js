@@ -59,7 +59,7 @@ Shape.createRandom = function(origin) {
 	var type = TYPES[Math.floor(Math.random() * TYPES.length)]
 	switch (type) {
 		case 'Square':
-
+			return new Square(origin);
 		case 'Line':
 			return new Line(origin);
 		case 'Plus':

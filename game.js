@@ -3,7 +3,7 @@ import Board from './board.js';
 import Shape from './shape.js';
 import { Point } from './geometry.js';
 
-const INTERVAL = 200;
+const INTERVAL = 500;
 const BLOCK_SIZE = 20;
 
 class Game {
