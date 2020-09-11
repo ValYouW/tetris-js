@@ -3,7 +3,7 @@ import Board from './board.js';
 import Shape from './shape.js';
 import { Point } from './geometry.js';
 
-const INTERVAL = 200;
+const INTERVAL = 500;
 const BLOCK_SIZE = 20;
 
 class Game {
@@ -44,6 +44,7 @@ class Game {
 		if (!this.mainShape) { return; }
 		var dx = 0;
 		var dy = 0;
+		var rotate = false;
 		switch (e.key) {
 			case 'ArrowLeft':
 				dx = -1;
@@ -54,12 +55,17 @@ class Game {
 			case 'ArrowDown':
 				dy = 1;
 				break;
-			case 'Space':
+			case 'ArrowUp':
+				rotate = true;
 				break;
 		}
 
 		if (this.board.canMove(this.mainShape, dx, dy)) {
 			this.mainShape.move(dx, dy);
+		}
+
+		if (rotate) {
+			this.mainShape.rotate(this.board.bbox);
 		}
 	}
 
@@ -82,7 +88,7 @@ class Game {
 	gameStep() {
 		if (!this.mainShape) {
 			var x = Math.round(this.board.cols / 2);
-			var y = 0;
+			var y = 1;
 			this.mainShape = Shape.createRandom(new Point(x, y));
 		} else {
 			if (this.board.canMove(this.mainShape, 0, 1)) {

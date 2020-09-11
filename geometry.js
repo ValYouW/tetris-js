@@ -1,5 +1,5 @@
 class Point {
-	constructor(x, y) {
+	constructor(x = 0, y = 0) {
 		this.x = x;
 		this.y = y;
 	}
@@ -13,6 +13,20 @@ class Point {
 		this.y += dy;
 
 		return this;
+	}
+
+	rotate(origin, inBounds) {
+		origin = origin || new Point();
+
+		// Move to (0, 0)
+		var offsetX = 0 - origin.x;
+		var offsetY = 0 - origin.y;
+		var x = this.x + offsetX;
+		var y = this.y + offsetY;
+
+		// Rotate and move back to place
+		this.x = -1 * y - offsetX;
+		this.y = x - offsetY;
 	}
 }
 
@@ -33,6 +47,13 @@ class Rect {
 
 	move(dx, dy = 0) {
 		this.origin.move(dx, dy);
+	}
+
+	rotate(origin) {
+		this.origin.rotate(origin);
+		var w = this.width;
+		this.width = this.height;
+		this.height = w;
 	}
 }
 

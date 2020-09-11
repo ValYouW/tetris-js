@@ -1,9 +1,10 @@
-import { Rect } from './geometry.js';
+import { Rect, Point } from './geometry.js';
 const TYPES = ['Square', 'Line', 'Plus', 'L', 'Z'];
 
 class Shape {
-	constructor(bbox) {
+	constructor(bbox, anchorIdx) {
 		this.bbox = bbox;
+		this.anchorIdx = anchorIdx;
 		this.blocks = [];
 		this.color = '#999';
 	}
@@ -19,14 +20,49 @@ class Shape {
 		this.blocks.forEach(p => graphics.drawBlock(p.x, p.y, this.color));
 	}
 
-	rotate() { }
+	rotate(inBounds) {
+		var anchor = this.blocks[this.anchorIdx];
+		var minX = 9999;
+		var minY = 9999;
+		this.blocks.forEach(p => {
+			p.rotate(anchor, inBounds)
+			if (p.x < minX) { minX = p.x; }
+			if (p.y < minY) { minY = p.y; }
+		});
+
+		this.bbox = new Rect(new Point(minX, minY), this.bbox.height, this.bbox.width);
+
+		if (inBounds) {
+			var dx = 0;
+			var dy = 0;
+			if (this.bbox.y < inBounds.y) {
+				dy = inBounds.y - this.bbox.y;
+			}
+
+			if (this.bbox.y > (inBounds.height - 1)) {
+				dy = (inBounds.height - 1) - this.bbox.y;
+			}
+
+			if (this.bbox.x < inBounds.x) {
+				dx = inBounds.x - this.bbox.x;
+			}
+
+			if (this.bbox.x > (inBounds.width - 1)) {
+				dx = (inBounds.width - 1) - this.bbox.x;
+			}
+
+			this.move(dx, dy);
+			this.bbox.move(dx, dy);
+		}
+	}
 }
 
 Shape.createRandom = function(origin) {
 	var type = TYPES[Math.floor(Math.random() * TYPES.length)]
+	return new L(origin);
 	switch (type) {
 		case 'Square':
-			return new Square(origin);
+
 		case 'Line':
 			return new Line(origin);
 		case 'Plus':
@@ -44,7 +80,7 @@ export default Shape;
 
 class Square extends Shape {
 	constructor(origin) {
-		super(new Rect(origin, 2, 2));
+		super(new Rect(origin, 2, 2), 0);
 		this.blocks.push(origin.clone());
 		this.blocks.push(origin.clone().move(1, 0));
 		this.blocks.push(origin.clone().move(1, 1));
@@ -52,31 +88,29 @@ class Square extends Shape {
 
 		// this.color = '#cc0000';
 	}
+
+	rotate() { }
 }
 
 class Line extends Shape {
 	constructor(origin) {
-		super(new Rect(origin.clone().move(-2), 4, 1));
-		this.blocks.push(origin.clone().move(-2));
-		this.blocks.push(origin.clone().move(-1));
+		super(new Rect(origin, 4, 1), 1);
 		this.blocks.push(origin.clone());
 		this.blocks.push(origin.clone().move(1));
+		this.blocks.push(origin.clone().move(2));
+		this.blocks.push(origin.clone().move(3));
 
 		// this.color = '#009900';
-	}
-
-	rotate() {
-
 	}
 }
 
 class L extends Shape {
 	constructor(origin) {
-		super(new Rect(origin.clone().move(-2, 0), 3, 2));
-		this.blocks.push(origin.clone().move(-2, 0));
-		this.blocks.push(origin.clone().move(-1, 0));
+		super(new Rect(origin, 3, 2), 2);
 		this.blocks.push(origin.clone());
-		this.blocks.push(origin.clone().move(0, 1));
+		this.blocks.push(origin.clone().move(1));
+		this.blocks.push(origin.clone().move(2));
+		this.blocks.push(origin.clone().move(2, 1));
 
 		// this.color = '#0000cc';
 	}
@@ -84,11 +118,11 @@ class L extends Shape {
 
 class Z extends Shape {
 	constructor(origin) {
-		super(new Rect(origin.clone().move(-1, 0), 3, 2));
-		this.blocks.push(origin.clone().move(-1, 0));
+		super(new Rect(origin, 3, 2), 2);
 		this.blocks.push(origin.clone());
-		this.blocks.push(origin.clone().move(0, 1));
+		this.blocks.push(origin.clone().move(1));
 		this.blocks.push(origin.clone().move(1, 1));
+		this.blocks.push(origin.clone().move(2, 1));
 
 		// this.color = '#999900';
 	}
@@ -96,11 +130,11 @@ class Z extends Shape {
 
 class Plus extends Shape {
 	constructor(origin) {
-		super(new Rect(origin.clone().move(-1, 0), 3, 2));
-		this.blocks.push(origin.clone().move(-1, 0));
+		super(new Rect(origin, 3, 2), 1);
 		this.blocks.push(origin.clone());
-		this.blocks.push(origin.clone().move(1, 0));
-		this.blocks.push(origin.clone().move(0, 1));
+		this.blocks.push(origin.clone().move(1));
+		this.blocks.push(origin.clone().move(2));
+		this.blocks.push(origin.clone().move(1, 1));
 
 		// this.color = '#990099';
 	}
