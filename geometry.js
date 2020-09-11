@@ -58,6 +58,10 @@ class Rect {
 		this.height = w;
 		this.ending = new Point(this.origin.x + this.width - 1, this.origin.y + this.height - 1);
 	}
+
+	clone() {
+		return new Rect(this.origin.clone(), this.width, this.height);
+	}
 }
 
 export { Point, Rect };

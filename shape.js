@@ -8,6 +8,16 @@ class Shape {
 		this.color = '#999';
 	}
 
+	clone() {
+		// @ts-ignore
+		var s = new this.constructor(new Point());
+		s.bbox = this.bbox.clone();
+		s.color = this.color;
+		s.blocks = this.blocks.map(b => b.clone());
+
+		return s;
+	}
+
 	move(dx, dy) {
 		this.bbox.move(dx, dy);
 		this.blocks.forEach(p => {
@@ -53,25 +63,43 @@ class Shape {
 			this.move(dx, dy);
 		}
 	}
-}
 
-Shape.createRandom = function(origin) {
-	var type = TYPES[Math.floor(Math.random() * TYPES.length)]
-	switch (type) {
-		case 'Square':
-			return new Square(origin);
-		case 'Line':
-			return new Line(origin);
-		case 'Plus':
-			return new Plus(origin);
-		case 'L':
-			return new L(origin);
-		case 'Z':
-			return new Z(origin);
-		default:
-			throw new Error('Unknown shape type' + type);
+	static createRandom(origin) {
+		var type = TYPES[Math.floor(Math.random() * TYPES.length)]
+		switch (type) {
+			case 'Square':
+				return new Square(origin);
+			case 'Line':
+				return new Line(origin);
+			case 'Plus':
+				return new Plus(origin);
+			case 'L':
+				return new L(origin);
+			case 'Z':
+				return new Z(origin);
+			default:
+				throw new Error('Unknown shape type' + type);
+		}
 	}
 }
+
+// Shape.createRandom = function(origin) {
+// 	var type = TYPES[Math.floor(Math.random() * TYPES.length)]
+// 	switch (type) {
+// 		case 'Square':
+// 			return new Square(origin);
+// 		case 'Line':
+// 			return new Line(origin);
+// 		case 'Plus':
+// 			return new Plus(origin);
+// 		case 'L':
+// 			return new L(origin);
+// 		case 'Z':
+// 			return new Z(origin);
+// 		default:
+// 			throw new Error('Unknown shape type' + type);
+// 	}
+// }
 
 export default Shape;
 

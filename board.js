@@ -36,6 +36,17 @@ class Board {
 		return true;
 	}
 
+	isVacant(blocks) {
+		for (var i = 0; i < blocks.length; ++i) {
+			var pt = blocks[i];
+			if (this.blocksPile[pt.y][pt.x] === 1) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	addToPile(shape) {
 		shape.blocks.forEach(p => {
 			this.blocksPile[p.y][p.x] = 1;

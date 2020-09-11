@@ -42,9 +42,6 @@ class Game {
 
 	onKeyDown(e) {
 		if (!this.mainShape) { return; }
-		var dx = 0;
-		var dy = 0;
-		var rotate = false;
 		switch (e.code) {
 			case 'ArrowLeft':
 				this.moveShape(-1);
@@ -74,7 +71,11 @@ class Game {
 	}
 
 	rotateShape() {
-		this.mainShape.rotate(this.board.bbox);
+		var tmpShape = this.mainShape.clone();
+		tmpShape.rotate(this.board.bbox);
+		if (this.board.isVacant(tmpShape.blocks)) {
+			this.mainShape = tmpShape;
+		}
 	}
 
 	dropShape() {
