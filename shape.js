@@ -2,9 +2,8 @@ import { Rect, Point } from './geometry.js';
 const TYPES = ['Square', 'Line', 'Plus', 'L', 'Z'];
 
 class Shape {
-	constructor(bbox, anchorIdx) {
+	constructor(bbox) {
 		this.bbox = bbox;
-		this.anchorIdx = anchorIdx;
 		this.blocks = [];
 		this.color = '#999';
 	}
@@ -21,7 +20,7 @@ class Shape {
 	}
 
 	rotate(inBounds) {
-		var anchor = this.blocks[this.anchorIdx];
+		var anchor = this.blocks[1];
 		var minX = 9999;
 		var minY = 9999;
 		this.blocks.forEach(p => {
@@ -52,14 +51,12 @@ class Shape {
 			}
 
 			this.move(dx, dy);
-			this.bbox.move(dx, dy);
 		}
 	}
 }
 
 Shape.createRandom = function(origin) {
 	var type = TYPES[Math.floor(Math.random() * TYPES.length)]
-	return new L(origin);
 	switch (type) {
 		case 'Square':
 
@@ -80,7 +77,7 @@ export default Shape;
 
 class Square extends Shape {
 	constructor(origin) {
-		super(new Rect(origin, 2, 2), 0);
+		super(new Rect(origin, 2, 2));
 		this.blocks.push(origin.clone());
 		this.blocks.push(origin.clone().move(1, 0));
 		this.blocks.push(origin.clone().move(1, 1));
@@ -94,7 +91,7 @@ class Square extends Shape {
 
 class Line extends Shape {
 	constructor(origin) {
-		super(new Rect(origin, 4, 1), 1);
+		super(new Rect(origin, 4, 1));
 		this.blocks.push(origin.clone());
 		this.blocks.push(origin.clone().move(1));
 		this.blocks.push(origin.clone().move(2));
@@ -106,7 +103,7 @@ class Line extends Shape {
 
 class L extends Shape {
 	constructor(origin) {
-		super(new Rect(origin, 3, 2), 2);
+		super(new Rect(origin, 3, 2));
 		this.blocks.push(origin.clone());
 		this.blocks.push(origin.clone().move(1));
 		this.blocks.push(origin.clone().move(2));
@@ -118,7 +115,7 @@ class L extends Shape {
 
 class Z extends Shape {
 	constructor(origin) {
-		super(new Rect(origin, 3, 2), 2);
+		super(new Rect(origin, 3, 2));
 		this.blocks.push(origin.clone());
 		this.blocks.push(origin.clone().move(1));
 		this.blocks.push(origin.clone().move(1, 1));
@@ -130,7 +127,7 @@ class Z extends Shape {
 
 class Plus extends Shape {
 	constructor(origin) {
-		super(new Rect(origin, 3, 2), 1);
+		super(new Rect(origin, 3, 2));
 		this.blocks.push(origin.clone());
 		this.blocks.push(origin.clone().move(1));
 		this.blocks.push(origin.clone().move(2));
