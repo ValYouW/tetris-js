@@ -83,7 +83,7 @@ class Board {
 				}
 			}
 
-			// if (!found) { break; }
+			if (!found) { break; }
 		}
 	}
 }
