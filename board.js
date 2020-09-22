@@ -1,11 +1,10 @@
 import { Point, Rect } from './geometry.js';
 
 class Board {
-	constructor(rows, cols, blockSize) {
+	constructor(rows, cols) {
 		this.rows = rows;
 		this.cols = cols;
 		this.bbox = new Rect(new Point(), this.cols, this.rows);
-		this.blockSize = blockSize;
 		this.blocksPile = new Array(rows).fill(0).map(x => new Array(cols).fill(0));
 		this.colors = [];
 	}

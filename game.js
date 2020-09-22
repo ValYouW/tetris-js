@@ -26,10 +26,10 @@ class Game {
 
 		var rows = this.canvas.height / BLOCK_SIZE;
 		var cols = this.canvas.width / BLOCK_SIZE;
-		this.board = new Board(rows, cols, BLOCK_SIZE);
+		this.board = new Board(rows, cols);
 
 		var ctx = this.canvas.getContext('2d');
-		this.graphics = new Graphics(ctx, this.board);
+		this.graphics = new Graphics(ctx, BLOCK_SIZE);
 
 		this.timer = window.requestAnimationFrame(this.update.bind(this));
 	}
@@ -84,11 +84,14 @@ class Game {
 	}
 
 	update() {
-		if (!this.gameOver && Date.now() - this.lastUpdate > INTERVAL) {
-			this.gameOver = this.gameStep();
+		if (Date.now() - this.lastUpdate > INTERVAL) {
+			if (!this.gameOver) {
+				this.gameOver = this.gameStep();
+			} else {
+				this.board.dance();
+			}
+
 			this.lastUpdate = Date.now();
-		} else if (this.gameOver) {
-			this.board.dance();
 		}
 
 		this.draw();

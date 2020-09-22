@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function start(e) {
 	e.target.blur();
 	var can = document.getElementById('board');
-	var s = window.getComputedStyle(can);
-	can.width = parseFloat(s.width);
-	can.height = parseFloat(s.height);
 	if (game) { game.stop(); }
 	game = new Game(can);
 	game.start();

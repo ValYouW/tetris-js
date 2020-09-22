@@ -1,7 +1,7 @@
 class Graphics {
-	constructor(ctx, board) {
+	constructor(ctx, blockSize) {
 		this.ctx = ctx;
-		this.board = board;
+		this.blockSize = blockSize;
 	}
 
 	clear() {
@@ -9,13 +9,13 @@ class Graphics {
 	}
 
 	drawBlock(x, y, color = '#999') {
-		var screenX = x * this.board.blockSize - 0.5;
+		var screenX = x * this.blockSize - 0.5;
 		screenX = Math.max(0, screenX);
-		var screenY = y * this.board.blockSize - 0.5;
+		var screenY = y * this.blockSize - 0.5;
 
 		this.ctx.fillStyle = color;
-		this.ctx.fillRect(screenX, screenY, this.board.blockSize, this.board.blockSize);
-		this.ctx.strokeRect(screenX, screenY, this.board.blockSize, this.board.blockSize);
+		this.ctx.fillRect(screenX, screenY, this.blockSize, this.blockSize);
+		this.ctx.strokeRect(screenX, screenY, this.blockSize, this.blockSize);
 	}
 }
 
