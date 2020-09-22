@@ -34,7 +34,7 @@ class Shape {
 		var minX = 9999;
 		var minY = 9999;
 		this.blocks.forEach(p => {
-			p.rotate(anchor, inBounds)
+			p.rotate(anchor)
 			if (p.x < minX) { minX = p.x; }
 			if (p.y < minY) { minY = p.y; }
 		});
